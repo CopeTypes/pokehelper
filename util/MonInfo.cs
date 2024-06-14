@@ -5,12 +5,15 @@
         public string Level { get; set; }
         public string Iv { get; set; }
         public string IvFull { get; set; }
+        
+        public bool Shiny { get; set; }
 
-        public MonInfo(string level, string iv, string ivFull)
+        public MonInfo(string level, string iv, string ivFull, bool shiny)
         {
             Level = level;
             Iv = iv;
             IvFull = ivFull;
+            Shiny = shiny;
         }
 
         public bool IsPerfect()
@@ -25,7 +28,7 @@
 
         public override string ToString()
         {
-            return $"Level: {Level} IV: {IvFull} ({Iv})";
+            return $"Level: {Level} IV: {IvFull} ({Iv}) Shiny: {Shiny.ToString()}";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace PokeHelper.util
     public class AdbHelper
     {
         private readonly AdbClient _adb;
-        private DeviceClient _client;
+        private ExtendedDeviceClient _client;
         private DeviceData _device;
         private string _currentEventH;
         private Pos _currentEventMax;
@@ -41,7 +41,7 @@ namespace PokeHelper.util
             _config = config ?? throw new Exception("Null config provided to AdbHelper.");
         }
 
-        public DeviceClient GetDeviceClient()
+        public ExtendedDeviceClient GetDeviceClient()
         {
             return _client;
         }
@@ -95,7 +95,7 @@ namespace PokeHelper.util
                 }
                 
                 _device = d;
-                _client = new DeviceClient(_adb, _device);
+                _client = new ExtendedDeviceClient(_adb, _device);
                 return true;
 
             }

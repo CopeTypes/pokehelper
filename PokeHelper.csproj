@@ -13,6 +13,7 @@
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <Deterministic>true</Deterministic>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -205,6 +206,7 @@
         <Compile Include="util\AdbHelper.cs" />
         <Compile Include="util\AdbNotif.cs" />
         <Compile Include="util\DialogHelper.cs" />
+        <Compile Include="util\ExtendedDeviceClient.cs" />
         <Compile Include="util\MonInfo.cs" />
         <Compile Include="util\OcrHelper.cs" />
         <Compile Include="util\PgsHelper.cs" />

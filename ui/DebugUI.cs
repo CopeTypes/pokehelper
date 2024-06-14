@@ -68,10 +68,8 @@ namespace PokeHelper.ui
             var sw = new Stopwatch();
             sw.Start();
             var monInfo = _pogoHelper.GetPgsHelper().GetMonInfo();
-            var shiny = false;
-            shiny = _pogoHelper.GetPgsHelper().IsShiny();
             sw.Stop();
-            MessageBox.Show(monInfo != null ? $"Pokemon Stats: {monInfo} Shiny: {shiny.ToString()}\nCheck took {sw.ElapsedMilliseconds}ms" : "No pokemon on screen, or an error occured.");
+            MessageBox.Show(monInfo != null ? $"Pokemon Stats: {monInfo}\nCheck took {sw.ElapsedMilliseconds}ms" : "No pokemon on screen, or an error occured.");
         }
     }
 }

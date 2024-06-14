@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using AdvancedSharpAdbClient.DeviceCommands;
@@ -30,13 +31,20 @@ namespace PokeHelper.util
         public string GlobalOkId = "//node[@text='OK']"; // generic ok button used in PGSharp dialogs (ie autowalk)
 
         
-        private DeviceClient _client;
+        private ExtendedDeviceClient _client;
         private Config _config;
 
-        public PgsHelper(DeviceClient client, Config config)
+        public PgsHelper(ExtendedDeviceClient client, Config config)
         {
             _client = client;
             _config = config;
+            if (!_config.Rooted)
+            {
+                LevelId = LevelId.Replace("me.underworld.helaplugin", "me.underw.hp");
+                IvId = IvId.Replace("me.underworld.helaplugin", "me.underw.hp");
+                IvSummary = IvSummary.Replace("me.underworld.helaplugin", "me.underw.hp");
+                ShinyId = ShinyId.Replace("me.underworld.helaplugin", "me.underw.hp");
+            }
         }
 
         public bool IsNearbyRadarOnScreen()
@@ -162,10 +170,13 @@ namespace PokeHelper.util
 
         public MonInfo GetMonInfo()
         { // gets a summary for the current pokemon on screen (catch screen)
-            var lvl = GetLvl();
-            var iv = GetIv();
-            var ivFull = GetIvFull();
-            if (lvl != null && iv != null && ivFull != null) return new MonInfo(lvl, iv, ivFull);
+            var d = new List<string> { LevelId, IvId, IvSummary, ShinyId };
+            var dd = _client.FindElements(d);
+            if (dd == null) return null;
+            var lvl = dd[LevelId];
+            var iv = dd[IvId];
+            var ivFull = dd[IvSummary];
+            if (lvl != null && iv != null && ivFull != null) return new MonInfo(lvl.Text, iv.Text, ivFull.Text, dd.ContainsKey(ShinyId));
             return null;
         }
     }

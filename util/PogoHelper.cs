@@ -14,7 +14,7 @@ namespace PokeHelper.util
 
         private AdbHelper _adb; // used to interface with ADB
         private PgsHelper _pgsHelper; // used to interface with PGSharp stuff
-        private DeviceClient _client;
+        private ExtendedDeviceClient _client;
         private Positions _positions;
         private Config _config;
 
