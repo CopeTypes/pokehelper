@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -60,6 +61,17 @@ namespace PokeHelper.ui
         private async void stopShinyLoop_Click(object sender, EventArgs e)
         {
             await _pogoHelper.StopShinyHunting();
+        }
+
+        private void monInfoButton_Click(object sender, EventArgs e)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            var monInfo = _pogoHelper.GetPgsHelper().GetMonInfo();
+            var shiny = false;
+            shiny = _pogoHelper.GetPgsHelper().IsShiny();
+            sw.Stop();
+            MessageBox.Show(monInfo != null ? $"Pokemon Stats: {monInfo} Shiny: {shiny.ToString()}\nCheck took {sw.ElapsedMilliseconds}ms" : "No pokemon on screen, or an error occured.");
         }
     }
 }

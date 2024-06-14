@@ -22,5 +22,10 @@
         {
             return "Level: " + Level + " IV: " + Iv;
         }
+
+        public override string ToString()
+        {
+            return $"Level: {Level} IV: {IvFull} ({Iv})";
+        }
     }
 }

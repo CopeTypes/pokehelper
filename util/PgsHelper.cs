@@ -12,7 +12,7 @@ namespace PokeHelper.util
         
         
         public string SummaryWindowId = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum']"; // check for iv summary box (catch screen)
-        public string ShinyId = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum_ads']"; // check for shiny
+        public string ShinyId = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum_shiny']"; // check for shiny
         public string LevelId = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum_lvv']"; // pokemon level : 16
         public string IvId = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum_ivv']"; // iv : 64
         public string IvSummary = "//node[@resource-id='me.underworld.helaplugin:id/hl_ec_sum_ads']"; // full iv : 9/5/15

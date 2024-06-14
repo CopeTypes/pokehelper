@@ -38,6 +38,7 @@ namespace PokeHelper.ui
             this.FindGenButton = new System.Windows.Forms.Button();
             this.shinyLoopButton = new System.Windows.Forms.Button();
             this.stopShinyLoop = new System.Windows.Forms.Button();
+            this.monInfoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SetAllPosButton
@@ -110,11 +111,22 @@ namespace PokeHelper.ui
             this.stopShinyLoop.UseVisualStyleBackColor = true;
             this.stopShinyLoop.Click += new System.EventHandler(this.stopShinyLoop_Click);
             // 
+            // monInfoButton
+            // 
+            this.monInfoButton.Location = new System.Drawing.Point(182, 125);
+            this.monInfoButton.Name = "monInfoButton";
+            this.monInfoButton.Size = new System.Drawing.Size(146, 40);
+            this.monInfoButton.TabIndex = 7;
+            this.monInfoButton.Text = "Dump Mon Info";
+            this.monInfoButton.UseVisualStyleBackColor = true;
+            this.monInfoButton.Click += new System.EventHandler(this.monInfoButton_Click);
+            // 
             // DebugUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 297);
+            this.Controls.Add(this.monInfoButton);
             this.Controls.Add(this.stopShinyLoop);
             this.Controls.Add(this.shinyLoopButton);
             this.Controls.Add(this.FindGenButton);
@@ -127,6 +139,8 @@ namespace PokeHelper.ui
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DebugUI_FormClosing);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button monInfoButton;
 
         private System.Windows.Forms.Button stopShinyLoop;
 
