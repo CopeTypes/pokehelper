@@ -197,6 +197,12 @@
         <Compile Include="ui\DebugUI.Designer.cs">
           <DependentUpon>DebugUI.cs</DependentUpon>
         </Compile>
+        <Compile Include="ui\InputboxUI.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="ui\InputboxUI.Designer.cs">
+          <DependentUpon>InputboxUI.cs</DependentUpon>
+        </Compile>
         <Compile Include="ui\SetPosScreen.cs">
           <SubType>Form</SubType>
         </Compile>
@@ -228,6 +234,9 @@
         </Compile>
         <EmbeddedResource Include="ui\DebugUI.resx">
           <DependentUpon>DebugUI.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="ui\InputboxUI.resx">
+          <DependentUpon>InputboxUI.cs</DependentUpon>
         </EmbeddedResource>
         <EmbeddedResource Include="ui\SetPosScreen.resx">
           <DependentUpon>SetPosScreen.cs</DependentUpon>

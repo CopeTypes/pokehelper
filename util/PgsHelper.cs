@@ -33,18 +33,12 @@ namespace PokeHelper.util
         
         private ExtendedDeviceClient _client;
         private Config _config;
+        private bool pgsRoot = false;
 
         public PgsHelper(ExtendedDeviceClient client, Config config)
         {
             _client = client;
             _config = config;
-            if (!_config.Rooted)
-            {
-                LevelId = LevelId.Replace("me.underworld.helaplugin", "me.underw.hp");
-                IvId = IvId.Replace("me.underworld.helaplugin", "me.underw.hp");
-                IvSummary = IvSummary.Replace("me.underworld.helaplugin", "me.underw.hp");
-                ShinyId = ShinyId.Replace("me.underworld.helaplugin", "me.underw.hp");
-            }
         }
 
         public bool IsNearbyRadarOnScreen()
@@ -160,7 +154,7 @@ namespace PokeHelper.util
         public bool IsPerfect()
         { // check if the current pokemon in the catch screen is perfect
             var iv = GetIvFull();
-            return iv != null && iv.Equals("15/15/15");
+            return iv is "15/15/15";
         }
 
         public bool IsShiny()
@@ -170,8 +164,8 @@ namespace PokeHelper.util
 
         public MonInfo GetMonInfo()
         { // gets a summary for the current pokemon on screen (catch screen)
-            var d = new List<string> { LevelId, IvId, IvSummary, ShinyId };
-            var dd = _client.FindElements(d);
+            //var d = new List<string> { LevelId, IvId, IvSummary, ShinyId };
+            var dd = _client.FindElements(new List<string> { LevelId, IvId, IvSummary, ShinyId }, _config.Rooted);
             if (dd == null) return null;
             var lvl = dd[LevelId];
             var iv = dd[IvId];

@@ -39,6 +39,7 @@ namespace PokeHelper.ui
             this.shinyLoopButton = new System.Windows.Forms.Button();
             this.stopShinyLoop = new System.Windows.Forms.Button();
             this.monInfoButton = new System.Windows.Forms.Button();
+            this.buddySwapTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SetAllPosButton
@@ -121,11 +122,23 @@ namespace PokeHelper.ui
             this.monInfoButton.UseVisualStyleBackColor = true;
             this.monInfoButton.Click += new System.EventHandler(this.monInfoButton_Click);
             // 
+            // buddySwapTest
+            // 
+            this.buddySwapTest.Location = new System.Drawing.Point(182, 185);
+            this.buddySwapTest.Name = "buddySwapTest";
+            this.buddySwapTest.Size = new System.Drawing.Size(146, 40);
+            this.buddySwapTest.TabIndex = 8;
+            this.buddySwapTest.Text = "Test Buddy Swap";
+            this.buddySwapTest.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buddySwapTest.UseVisualStyleBackColor = true;
+            this.buddySwapTest.Click += new System.EventHandler(this.buddySwapTest_Click);
+            // 
             // DebugUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 297);
+            this.Controls.Add(this.buddySwapTest);
             this.Controls.Add(this.monInfoButton);
             this.Controls.Add(this.stopShinyLoop);
             this.Controls.Add(this.shinyLoopButton);
@@ -139,6 +152,8 @@ namespace PokeHelper.ui
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DebugUI_FormClosing);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Button buddySwapTest;
 
         private System.Windows.Forms.Button monInfoButton;
 

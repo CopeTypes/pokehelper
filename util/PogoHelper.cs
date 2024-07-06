@@ -339,27 +339,84 @@ namespace PokeHelper.util
             throw new Exception("Unknown Pogo UI State.");
         }
 
-        private async Task SwapBuddy(int id)
+        public async Task<bool> SwapBuddy(int id, string overrideSearch = null)
         {
-            // todo impl
-            // first, need to add pos for the buddy icon (main screen), and handling swiping down to the swap buddy button. also need a pos for that button
-            // then handling that sequence (dont recall offhand if there's some ok button)
-            // need a position for the first pokemon slot (top left)
-            // once the screen to select a pokemon is open, input "buddy[id]" into the search bar and send ok
-            // this requires the user to tag up to 20 buddies with buddy1 - buddy20, need to implement a system to rotate them as well
-            // tap the first pokemon slot pos and wait whatever the delay is
-            // this sequence should be able to work the same for free or premium but have to test if any animation stuff is skipped with premium
+            var search = "buddy" + id;
+            if (overrideSearch != null) search = overrideSearch;
+            Console.WriteLine($"Attempting to swap to {search}");
+            if (!await _dialogHelper.ClearAllDialogs())
+            {
+                Console.WriteLine("Error with ClearAllDialogs, failed.");
+                return false;
+            }
+            Console.WriteLine("Opening buddy menu");
+            await _adb.Click(_positions.BuddyIcon); // open current buddy menu
+            await Task.Delay(500);
+            if (_config.LowSpecPhone) await Task.Delay(700);
+            Console.WriteLine("Swiping down to bottom of buddy menu");
+            _adb.SwipeTo(_positions.BuddySwapSwipeStart, _positions.BuddySwapSwipeEnd); // swipe down to make the swap button visible
+            await Task.Delay(500);
+            if (_config.LowSpecPhone) await Task.Delay(700);
+            Console.WriteLine("Clicking swap buddy button");
+            await _adb.Click(_positions.SwapBuddyButton); // click swap buddy button
+            await Task.Delay(500);
+            if (_config.LowSpecPhone) await Task.Delay(700);
+            Console.WriteLine("Automatically finding and pressing generic green button (yes)");
+            if (!await _adb.ClickGenericOk())
+            {
+                Console.WriteLine("Error with ClickGenericOk, failed.");
+                return false;
+            }
+            await Task.Delay(500);
+            Console.WriteLine("Clicking into search bar");
+            await _adb.Click(_positions.PokemonBoxSearchBar); // click the search bar
+            await Task.Delay(300);
+            Console.WriteLine("Typing buddy search text");
+            await _adb.SendText(search); // search for buddy1 etc.
+            await Task.Delay(200);
+            if (_config.LowSpecPhone) await Task.Delay(300);
+            Console.WriteLine("Pressing enter key");
+            await _adb.PressEnterKey();
+            await Task.Delay(200);
+            if (_config.LowSpecPhone) await Task.Delay(300);
+            Console.WriteLine("Clicking first pokemon box");
+            await _adb.Click(_positions.FirstPokemonBox); // click the pokemon
+            Console.WriteLine("Waiting 7s for buddy swap animation");
+            await Task.Delay(7000); // wait for buddy change animation
+            Console.WriteLine("Pressing back button to exit buddy menu");
+            await _adb.PressBackButton(); // exit the buddy menu
+            Console.WriteLine("Waiting 5s to catch (and clear) any buddy dialogs");
+            await Task.Delay(5000); // wait for possible buddy dialogs (level up, etc)
+            var ok = await _dialogHelper.ClearBuddyDialogs();
+            if (ok)
+            {
+                Console.WriteLine("Buddy swap OK!");
+                return true;
+            }
+            Console.WriteLine("Error with ClearBuddyDialogs, failed.");
+            return false;
         }
 
-        private async Task BuddyRotate()
+        private async Task<bool> BuddyRotate(int buddies)
         {
-            // todo impl
-            // config value for how many buddies are tagged (max of 20)
-            // to increase the success value, the main screen should never be shown during this sequence
-            // there will be pop-ups for leveling up buddies that can't (yet) be detected, so it will be more reliable regardless i think
-            // but we also have to come up with a way to detect those pop-ups anyways, for stuff like weather alerts, friend level up , all that shit
-            // todo see if we can just check for "OK" with OCR because that should only be shown when there's visible buttons
-            // that would be so cool and simple lmfao but i doubt it'll be that easy. also once we get into OCR stuff its another fucking rabbit hole, same as the ai SHIT
+            var error = false;
+            while (buddies > 1)
+            {
+                if (!await _dialogHelper.ClearAllDialogs()) // check for dialog(s) before doing anything
+                { // error with dialog clear sequence
+                    error = true;
+                    break;
+                }
+                var ok = await SwapBuddy(buddies); // run buddy change sequence
+                buddies--;
+                if (ok) await Task.Delay(TimeSpan.FromSeconds(30)); // delay before next swap
+                else
+                { // error with buddy change sequence
+                    error = true;
+                    break;
+                }
+            }
+            return error;
         }
 
         private async Task SendGiftManual()
@@ -468,5 +525,6 @@ namespace PokeHelper.util
 
             await StartApp();
         }
+        
     }
 }

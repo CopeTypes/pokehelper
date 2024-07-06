@@ -71,5 +71,11 @@ namespace PokeHelper.ui
             sw.Stop();
             MessageBox.Show(monInfo != null ? $"Pokemon Stats: {monInfo}\nCheck took {sw.ElapsedMilliseconds}ms" : "No pokemon on screen, or an error occured.");
         }
+
+        private async void buddySwapTest_Click(object sender, EventArgs e)
+        {
+            await _pogoHelper.SwapBuddy(0, "buddy");
+        }
+        
     }
 }

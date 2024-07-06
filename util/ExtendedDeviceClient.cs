@@ -25,7 +25,7 @@ namespace PokeHelper.util
         /// <param name="xpaths">The list of xpaths of the elements to find.</param>
         /// <param name="timeout">The timeout for waiting the elements. Only check once if <see langword="default"/> or <see cref="TimeSpan.Zero"/>.</param>
         /// <returns>A dictionary with the xpath as key and the found <see cref="Element"/> as value.</returns>
-        public Dictionary<string, Element> FindElements(List<string> xpaths, TimeSpan timeout = default)
+        public Dictionary<string, Element> FindElements(List<string> xpaths, bool root = false, TimeSpan timeout = default)
         {
             //if (timeout == default) timeout = TimeSpan.FromSeconds(10);
             Stopwatch stopwatch = new();
@@ -43,12 +43,13 @@ namespace PokeHelper.util
                     {
                         foreach (var xpath in xpaths)
                         {
-                            
-                            var xmlNode = doc.SelectSingleNode(xpath);
+                            var xp = xpath;
+                            if (!root) xp = xpath.Replace("me.underworld.helaplugin", "me.underw.hp");
+                            var xmlNode = doc.SelectSingleNode(xp);
                             if (xmlNode == null) continue;
                             //Console.WriteLine($"Got node: {xmlNode.OuterXml}");
                             var element = Element.FromXmlNode(AdbClient, Device, xmlNode);
-                            if (element != null) foundElements[xpath] = element;
+                            if (element != null) foundElements[xp] = element;
 
                         }
                         

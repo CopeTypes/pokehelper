@@ -109,6 +109,7 @@ namespace PokeHelper.util
 
         public async Task SwipeTo(Pos first, Pos second, int time)
         {
+            
             //var start = first.ToPoint();
             //var end = second.ToPoint();
             //await _client.SwipeAsync(start, end, time); not entirely sure why but this isn't working
@@ -340,6 +341,16 @@ namespace PokeHelper.util
         public async Task PressBackButton()
         {
             await _client.SendKeyEventAsync("KEYCODE_BACK");
+        }
+
+        public async Task PressEnterKey()
+        {
+            await _client.SendKeyEventAsync("KEYCODE_ENTER");
+        }
+
+        public async Task SendText(string text)
+        {
+            await _client.SendTextAsync(text);
         }
 
         public async Task PressBackButton(int times)

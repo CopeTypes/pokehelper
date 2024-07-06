@@ -55,6 +55,12 @@ namespace PokeHelper.config
         
         public Pos PokemonMenuButton { get; set; } // the pokemon storage button inside the trainer menu
         public Pos FirstPokemonBox { get; set; } // the first (top left) pokemon storage box
+        
+        public Pos BuddySwapSwipeStart { get; set; }
+        public Pos BuddySwapSwipeEnd { get; set; }
+        public Pos SwapBuddyButton { get; set; }
+        public Pos BuddyIcon { get; set; } // buddy icon on main menu, next to trainer icon
+        public Pos PokemonBoxSearchBar { get; set; }
 
         [JsonIgnore] private static string _deviceName;
 
@@ -120,6 +126,11 @@ namespace PokeHelper.config
             //DrivingWarningButton = pjson.DrivingWarningButton;
             PokemonMenuButton = pjson.PokemonMenuButton;
             FirstPokemonBox = pjson.FirstPokemonBox;
+            BuddySwapSwipeStart = pjson.BuddySwapSwipeStart;
+            BuddySwapSwipeEnd = pjson.BuddySwapSwipeEnd;
+            SwapBuddyButton = pjson.SwapBuddyButton;
+            PokemonBoxSearchBar = pjson.PokemonBoxSearchBar;
+            BuddyIcon = pjson.BuddyIcon;
             
             PosList.Add(CenterScreen);
             PosList.Add(CenterOk);
@@ -140,6 +151,11 @@ namespace PokeHelper.config
             //PosList.Add(DrivingWarningButton);
             PosList.Add(PokemonMenuButton);
             PosList.Add(FirstPokemonBox);
+            PosList.Add(BuddySwapSwipeStart);
+            PosList.Add(BuddySwapSwipeEnd);
+            PosList.Add(SwapBuddyButton);
+            PosList.Add(PokemonBoxSearchBar);
+            PosList.Add(BuddyIcon);
 
             if (!newCfg && MissingValues())
                 MessageBox.Show("Some (or all) positions are not set, the config may be corrupt.");
